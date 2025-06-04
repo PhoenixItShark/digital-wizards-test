@@ -54,9 +54,9 @@ export interface SVGWrapperProps {
   stroke?: string;
 }
 
-export interface RouletteItem {
-  component: string;
-  props: {};
+export interface RouletteItem<K extends keyof ComponentPropsMap = keyof ComponentPropsMap> {
+  component: K;
+  props: ComponentPropsMap[K];
   type: RouletteType;
   chance: number;
 }
@@ -68,8 +68,14 @@ export interface Block {
   offset: number;
 }
 
-export type ComponentMap = Record<string, ComponentType<RouletteBlockProps>>;
+export type ComponentPropsMap = {
+  RouletteBlock: RouletteBlockProps;
+  // Добавь сюда другие компоненты, если они есть
+};
 
+export type ComponentMap = {
+  [K in keyof ComponentPropsMap]: ComponentType<ComponentPropsMap[K]>;
+};
 export interface InputProps {
   title?: string;
   width?: string;
