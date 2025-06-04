@@ -1,6 +1,9 @@
 //lib/type/@types.ts
 import { ComponentType, JSX } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
+import { FunctionComponent, SVGProps } from "react";
+
+export type SvgComponent = FunctionComponent<SVGProps<SVGSVGElement>>;
 
 export type RouletteType =
   | "black"
@@ -42,7 +45,7 @@ export interface RouletteBlockProps {
 }
 
 export interface SVGWrapperProps {
-  Svg: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
+  Svg: SvgComponent;
   className?: string;
   svgWidth: number;
   svgHeight: number;
