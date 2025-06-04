@@ -18,12 +18,15 @@ export interface UserStore {
     green: number | null;
     joker: number | null;
   };
-  bet: Record<string, any> | null;
+  bet: {
+    count: number;
+    type: RouletteType;
+  } | null;
 
   setDibs: (count: number) => void;
   setLast: (type: string) => void;
   setLastSum: (type: RouletteType) => void;
-  setBet: (count: number, type: string) => void;
+  setBet: (count: number, type: RouletteType) => void;
 }
 
 export interface RouletteBlockProps {
@@ -50,7 +53,7 @@ export interface SVGWrapperProps {
 
 export interface RouletteItem {
   component: string;
-  props: Record<string, any>;
+  props: {};
   type: RouletteType;
   chance: number;
 }
@@ -62,7 +65,7 @@ export interface Block {
   offset: number;
 }
 
-export type ComponentMap = Record<string, ComponentType<any>>;
+export type ComponentMap = Record<string, ComponentType<RouletteBlockProps>>;
 
 export interface InputProps {
   title?: string;

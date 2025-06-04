@@ -14,7 +14,7 @@ import {
 const RouletteBlock = dynamic(() => import("./RouletteBlock"), { ssr: false });
 
 const Roulette: React.FC = () => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLUListElement>(null);
   const componentMap = useMemo<ComponentMap>(() => ({ RouletteBlock }), []);
 
   const { seconds, milliseconds, isFinished, resetTimer } = useCountdownTimer(

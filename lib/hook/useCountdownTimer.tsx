@@ -41,7 +41,7 @@ export const useCountdownTimer = (initialSeconds: number) => {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [initialSeconds, restartKey]);
+  }, [initialSeconds, restartKey, start]);
 
   const seconds = Math.floor(timeLeft / 1000);
   const milliseconds = Math.floor((timeLeft % 1000) / 10);

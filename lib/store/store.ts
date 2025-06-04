@@ -48,7 +48,7 @@ const useUserStore = create<UserStore>()(
           });
         },
 
-        setBet: (count: number, type: string) => {
+        setBet: (count: number, type: RouletteType) => {
           set({
             bet: { count, type },
           });

@@ -1,7 +1,12 @@
 //lib/hool/useRoulette.tsx
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { Block, ComponentMap, RouletteItem } from "../type/@types";
+import {
+  Block,
+  ComponentMap,
+  RouletteBlockProps,
+  RouletteItem,
+} from "../type/@types";
 import useUserStore from "../store/store";
 import { ROULETTE_CONST } from "../constant/const";
 
@@ -23,7 +28,7 @@ export const useRoulette = (
     if (isFinished) {
       spin();
     }
-  }, [isFinished]);
+  }, [isFinished, spin]);
 
   const generateBlock = useCallback(
     // Генерация блока
@@ -44,7 +49,7 @@ export const useRoulette = (
 
       const Component = componentMap[selectedItem.component];
       return {
-        block: <Component {...selectedItem.props} />,
+        block: <Component {...(selectedItem.props as RouletteBlockProps)} />,
         type: selectedItem.type,
         chance: selectedItem.chance,
         offset: 0,
@@ -72,7 +77,7 @@ export const useRoulette = (
     [generateBlock, bloksCount],
   );
 
-  const spin = () => {
+  function spin() {
     // Функция прокрутки
     if (!ref.current) return;
 
@@ -103,7 +108,7 @@ export const useRoulette = (
         }, ROULETTE_CONST.SPIN_DURATION + 1200); // ждём конца анимации + время для простоя
       }
     });
-  };
+  }
 
   return { blocks, addBlocks, generateBlock, spin, isSpinFinished };
 };
