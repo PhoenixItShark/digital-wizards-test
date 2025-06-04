@@ -1,6 +1,6 @@
 //lib/hook/useCountdownTimer.tsx
 "use client";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const useCountdownTimer = (initialSeconds: number) => {
   const [timeLeft, setTimeLeft] = useState(initialSeconds * 1000);
