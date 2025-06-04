@@ -9,7 +9,7 @@ const UserBet = () => {
       {data?.map((el, index) => {
         return (
           <li key={index} className='flex items-center p-2 pl-3'>
-            <div className='flex items-center  gap-1.5'>
+            <div className='flex items-center gap-1.5 ml-[38px]'>
               <SVG {...svgConfigs.rhombus} />
               <p className='text-sm font-medium text-white/80'>{el.username}</p>
             </div>
