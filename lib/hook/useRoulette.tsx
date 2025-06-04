@@ -24,12 +24,6 @@ export const useRoulette = (
   const { setLast, setLastSum } = useUserStore();
   const [isSpinFinished, setIsSpinFinished] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (isFinished) {
-      spin();
-    }
-  }, [isFinished, spin]);
-
   const generateBlock = useCallback(
     // Генерация блока
     (lastType?: string): Block => {
@@ -77,38 +71,50 @@ export const useRoulette = (
     [generateBlock, bloksCount],
   );
 
-  function spin() {
-    // Функция прокрутки
+  const spin = useCallback(() => {
     if (!ref.current) return;
 
-    const move = 116 * blocks.length - 1280; // место куда перемещаеться рулетка
+    const move = 116 * blocks.length - 1280;
 
     setTimeout(() => {
       if (ref.current) {
         ref.current.style.transition = `transform ${ROULETTE_CONST.SPIN_DURATION}ms cubic-bezier(0.1, 0.2, 0.25, 1)`;
         ref.current.style.transform = `translate3d(-${move}px, 0, 0)`;
 
-        const centerPosition = 1280 / 2; // Центр
-        const index = Math.floor((move + centerPosition) / 116); // Вычисляем на какой блок выпало
+        const centerPosition = 1280 / 2;
+        const index = Math.floor((move + centerPosition) / 116);
         const elem = blocks[index];
 
         setTimeout(() => {
-          // устанавливаем элементы в store
           setLast(elem.type);
           setLastSum(elem.type);
-        }, ROULETTE_CONST.SPIN_DURATION + 100); //После конца анимации, + небольшая задежка
+        }, ROULETTE_CONST.SPIN_DURATION + 100);
+
         setTimeout(() => {
-          setIsSpinFinished(true); // Рендерим серую газлушку, для перестройки блоков
+          setIsSpinFinished(true);
           setTimeout(() => {
-            // перестраиваем блоки
-            setBlocks([]); // чистим блоки
-            addBlocks(); // создаем новые
-            resetTimer(); // делаем ресет таймера
+            setBlocks([]);
+            addBlocks();
+            resetTimer();
           }, 2000);
-        }, ROULETTE_CONST.SPIN_DURATION + 1200); // ждём конца анимации + время для простоя
+        }, ROULETTE_CONST.SPIN_DURATION + 1200);
       }
     });
-  }
+  }, [
+    ref,
+    blocks,
+    setLast,
+    setLastSum,
+    setIsSpinFinished,
+    addBlocks,
+    resetTimer,
+  ]);
+
+  useEffect(() => {
+    if (isFinished) {
+      spin();
+    }
+  }, [isFinished, spin]);
 
   return { blocks, addBlocks, generateBlock, spin, isSpinFinished };
 };

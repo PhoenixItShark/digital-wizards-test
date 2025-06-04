@@ -1,6 +1,6 @@
 //lib/hook/useCountdownTimer.tsx
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useCountdownTimer = (initialSeconds: number) => {
   const [timeLeft, setTimeLeft] = useState(initialSeconds * 1000);
@@ -9,8 +9,9 @@ export const useCountdownTimer = (initialSeconds: number) => {
   const startTimeRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
 
-  const start = () => {
+  const start = useCallback(() => {
     startTimeRef.current = performance.now();
+
     const update = (now: number) => {
       if (startTimeRef.current === null) return;
 
@@ -24,8 +25,9 @@ export const useCountdownTimer = (initialSeconds: number) => {
         setIsFinished(true);
       }
     };
+
     rafRef.current = requestAnimationFrame(update);
-  };
+  }, [initialSeconds, setTimeLeft, setIsFinished]);
 
   const resetTimer = () => {
     console.log("restart");
