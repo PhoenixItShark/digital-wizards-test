@@ -9,7 +9,7 @@ export const useCountdownTimer = (initialSeconds: number) => {
   const startTimeRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
 
-  const start = useCallback(() => {
+  const start = () => {
     startTimeRef.current = performance.now();
 
     const update = (now: number) => {
@@ -27,7 +27,7 @@ export const useCountdownTimer = (initialSeconds: number) => {
     };
 
     rafRef.current = requestAnimationFrame(update);
-  }, [initialSeconds, setTimeLeft, setIsFinished]);
+  }
 
   const resetTimer = () => {
     console.log("restart");
@@ -43,7 +43,7 @@ export const useCountdownTimer = (initialSeconds: number) => {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [initialSeconds, restartKey, start]);
+  }, [initialSeconds, restartKey]);
 
   const seconds = Math.floor(timeLeft / 1000);
   const milliseconds = Math.floor((timeLeft % 1000) / 10);

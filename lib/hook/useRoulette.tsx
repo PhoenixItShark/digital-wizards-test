@@ -71,7 +71,7 @@ export const useRoulette = (
     [generateBlock, bloksCount],
   );
 
-  const spin = useCallback(() => {
+  const spin =() => {
     if (!ref.current) return;
 
     const move = 116 * blocks.length - 1280;
@@ -100,21 +100,13 @@ export const useRoulette = (
         }, ROULETTE_CONST.SPIN_DURATION + 1200);
       }
     });
-  }, [
-    ref,
-    blocks,
-    setLast,
-    setLastSum,
-    setIsSpinFinished,
-    addBlocks,
-    resetTimer,
-  ]);
+  };
 
   useEffect(() => {
     if (isFinished) {
       spin();
     }
-  }, [isFinished, spin]);
+  }, [isFinished]);
 
   return { blocks, addBlocks, generateBlock, spin, isSpinFinished };
 };
