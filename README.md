@@ -1,5 +1,6 @@
 ## Stack
-+ Next.Js
-+ TypeScript
-+ Zustand
-+ Tailwind
+
+- Next.Js
+- TypeScript
+- Zustand
+- Tailwind
